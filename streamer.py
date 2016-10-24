@@ -50,7 +50,8 @@ class myStreamer(BaseHTTPRequestHandler):
 	def do_GET(self):
 		print(self.headers)
 		headers = str(self.headers)
-
+		url = str(self.path)
+		print "url = " + url + "\n"
 		start = ''
 		end = 0
 		count = 0
@@ -69,9 +70,9 @@ class myStreamer(BaseHTTPRequestHandler):
 		else:
 			self.send_response(206)
 			if start  > 0:
-				count = int(start/int(CHUNK))
+				count = int(start/int(self.server.chunksize))
 
-			self.send_header('Content-Length',str(self.server.size-(count*int(CHUNK))))
+			self.send_header('Content-Length',str(self.server.size-(count*int(self.server.chunksize))))
 			self.send_header('Content-Range','bytes ' + str(start) + '-' + str(self.server.size-1)+'/'+str(self.server.size))
 
 		self.send_header('Content-type','video/mp4')
