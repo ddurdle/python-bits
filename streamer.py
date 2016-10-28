@@ -15,7 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-	This is sample code demonstrating resumable stream of a video file to a browser. 
+	This is sample code demonstrating resumable stream of a video file to a browser.
 
 '''
 

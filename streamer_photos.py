@@ -24,6 +24,7 @@ from BaseHTTPServer import BaseHTTPRequestHandler,HTTPServer
 import sys
 import re
 import os
+import urllib, urllib2
 
 
 
@@ -44,25 +45,33 @@ class myStreamer(BaseHTTPRequestHandler):
 
 	#Handler for the POST requests
 	def do_GET(self):
-		print(self.headers)
-		headers = str(self.headers)
 
-		#content_len = int(self.headers.getheader('content-length', 0))
-		#post_body = self.rfile.read(content_len)
+            print 'x'
+            url =  'https://' + str(self.server.domain) + str(self.path)
+            print url
 
-		print 'http:/' + str(self.server.domain) + str(self.path)
+            req = urllib2.Request(url)
+            try:
+                response = urllib2.urlopen(req)
+            except urllib2.URLError, e:
+                return
 
-#		for r in re.finditer('redirect\=(.*)' ,
-#				     post_body, re.DOTALL):
-#		  redirect = r.group(1)
-#		  print "ib ib" + post_body
-#		  print "\n\n" + redirect
-#		  break
-		self.server.ready = False
-		return
+            self.wfile.write(response.read())
+
+            #response_data = response.read()
+            response.close()
+
+            #		for r in re.finditer('redirect\=(.*)' ,
+            #				     post_body, re.DOTALL):
+            #		  redirect = r.group(1)
+            #		  print "ib ib" + post_body
+            #		  print "\n\n" + redirect
+            #		  break
+            self.server.ready = False
+
 
 server = MyHTTPServer(('', 8094), myStreamer)
-server.setDomain('4.bp.blogspot.com')
+server.setDomain('lh4.googleusercontent.com')
 while server.ready:
     server.handle_request()
 server.socket.close()
