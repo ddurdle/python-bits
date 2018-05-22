@@ -43,19 +43,29 @@ class myStreamer(BaseHTTPRequestHandler):
 	#Handler for the GET requests
     def do_GET(self):
         print(self.headers)
+        self.send_response(200)
+        self.end_headers()
 
         headers = str(self.headers)
-        host = re.search(r'Host: (\S+)', str(headers))
-        if host is not None:
-            host = str(host.group(1))
+        url = re.search(r'path\=(\S+)', str(self.path))
+        if url is not None:
+            url = str(url.group(1))
 
-        url = str('http://' + str(host)  + str(self.path))
-        url = str(re.sub('8080', '8096', url))
-        print url
-        self.send_response(301)
-        print 'location  = ' + url
-        self.send_header('Location',url)
-        self.end_headers()
+
+        while(retry < 10):
+            print url + "\n"
+
+            req = urllib2.Request(url)
+            try:
+                response = urllib2.urlopen(req)
+            except urllib2.URLError, e:
+                retry += 1
+
+        self.wfile.write(response.read())
+
+        #response_data = response.read()
+        response.close()
+
 
 server = MyHTTPServer(('', 8080), myStreamer)
 while server.ready:
