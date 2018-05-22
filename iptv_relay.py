@@ -45,7 +45,7 @@ class myStreamer(BaseHTTPRequestHandler):
     def do_GET(self):
         print(self.headers)
 
-        useragent = re.search(r'Useragent\=(\S+)', str(headers))
+        useragent = re.search(r'Useragent\=(\S+)', str(self.headers))
         if useragent is not None:
             useragent = str(useragent.group(1))
 
