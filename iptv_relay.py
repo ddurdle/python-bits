@@ -55,13 +55,14 @@ class myStreamer(BaseHTTPRequestHandler):
         else:
             print "no url provided\n"
             return
-        retry = 0
-        while(retry < 10):
+        retry = 1
+        while(retry and retry < 10):
             print url + "\n"
 
             req = urllib2.Request(url)
             try:
                 response = urllib2.urlopen(req)
+                retry = 0
             except urllib2.URLError, e:
                 retry += 1
 
