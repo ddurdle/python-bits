@@ -58,9 +58,7 @@ class myStreamer(BaseHTTPRequestHandler):
         url = re.search(r'path\=(\S+)', str(self.path))
         if url is not None:
             url = str(url.group(1))
-
         else:
-            print "no url provided\n"
             return
         retry = 1
         while(retry and retry < 10):
@@ -75,7 +73,9 @@ class myStreamer(BaseHTTPRequestHandler):
                 retry += 1
 
         if retry == 0:
-            self.wfile.write(response.read())
+            response_data = response.read()
+            response_data = str(re.sub('/hlsr/', 'http://watch.spartaniptv.com:8880/hlsr/', response_data))
+            self.wfile.write(response_data)
 
             #response_data = response.read()
             response.close()
