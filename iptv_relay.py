@@ -48,7 +48,7 @@ class myStreamer(BaseHTTPRequestHandler):
         useragent = re.search(r'User-Agent\: (\S+)', str(self.headers))
         if useragent is not None:
             useragent = str(useragent.group(1))
-            self.send_header('User-Agent',useragent)
+            header = { 'User-Agent' : useragent}
 
         print self.headers
         self.send_response(200)
@@ -66,7 +66,7 @@ class myStreamer(BaseHTTPRequestHandler):
         while(retry and retry < 10):
             print url + "\n"
 
-            req = urllib2.Request(url)
+            req = urllib2.Request(url, None,header)
             try:
                 response = urllib2.urlopen(req)
                 retry = 0
