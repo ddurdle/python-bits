@@ -64,6 +64,7 @@ class myStreamer(BaseHTTPRequestHandler):
                 response = urllib2.urlopen(req)
                 retry = 0
             except urllib2.URLError, e:
+                print str(e)
                 retry += 1
 
         if retry == 0:
