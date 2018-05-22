@@ -51,7 +51,7 @@ class myStreamer(BaseHTTPRequestHandler):
         if url is not None:
             url = str(url.group(1))
 
-
+        retry = 0
         while(retry < 10):
             print url + "\n"
 
