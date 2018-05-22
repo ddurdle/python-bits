@@ -46,11 +46,14 @@ class myStreamer(BaseHTTPRequestHandler):
 
         headers = str(self.headers)
         host = re.search(r'Host: (\S+)', str(headers))
-        url = str(str(host) + '/' + str(self.path))
-        url = re.sub('8080', '8096', url)
+        if host is not None:
+            host = str(host.group(1))
+
+        url = str('http://' + str(host)  + str(self.path))
+        url = str(re.sub('8080', '8096', url))
         print url
         self.send_response(307)
-
+        print 'location  = ' + url
         self.send_header('Location',url)
         self.end_headers()
 
