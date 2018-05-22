@@ -49,7 +49,7 @@ class myStreamer(BaseHTTPRequestHandler):
         if useragent is not None:
             useragent = str(useragent.group(1))
 
-        print headers
+        print self.headers
         self.send_response(200)
         self.end_headers()
 
