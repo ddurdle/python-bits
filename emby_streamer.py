@@ -43,10 +43,12 @@ class myStreamer(BaseHTTPRequestHandler):
 	#Handler for the GET requests
     def do_GET(self):
         print(self.headers)
-        headers = str(self.headers)
-        url = str(self.path)
-        url = re.sub('8080', '8096', url)
 
+        headers = str(self.headers)
+        host = re.search(r'Host: (\S+)', str(headers))
+        url = str(str(host) + '/' + str(self.path))
+        url = re.sub('8080', '8096', url)
+        print url
         self.send_response(307)
 
         self.send_header('Location',url)
