@@ -66,10 +66,11 @@ class myStreamer(BaseHTTPRequestHandler):
             except urllib2.URLError, e:
                 retry += 1
 
-        self.wfile.write(response.read())
+        if retry == 0:
+            self.wfile.write(response.read())
 
-        #response_data = response.read()
-        response.close()
+            #response_data = response.read()
+            response.close()
 
 
 server = MyHTTPServer(('', 8080), myStreamer)
