@@ -58,6 +58,7 @@ class myStreamer(BaseHTTPRequestHandler):
         url = re.search(r'path\=(\S+)', str(self.path))
         if url is not None:
             url = str(url.group(1))
+            print "URL = " + str(url) + "\n"
         else:
             return
         retry = 1
