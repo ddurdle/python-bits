@@ -52,8 +52,9 @@ class myStreamer(BaseHTTPRequestHandler):
 
         headers = str(self.headers)
         parameters = re.search(r'direction\=(\S+)', str(self.path))
+        direction = 0
         if parameters is not None:
-            direction = str(parameters.group(1))
+            direction = int(parameters.group(1))
             print "direction = " + str(direction) + "\n"
         else:
             return
