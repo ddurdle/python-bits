@@ -73,7 +73,7 @@ class myStreamer(BaseHTTPRequestHandler):
                 print str(e)
                 retry += 1
 
-        chunksize = 24*1024
+        chunksize = 24*512*1024
         if retry == 0:
             while True:
                 print "reading...\n"
