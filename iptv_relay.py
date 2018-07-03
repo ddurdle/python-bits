@@ -74,6 +74,7 @@ class myStreamer(BaseHTTPRequestHandler):
                 retry += 1
 
         if retry == 0:
+            print "reading...\n"
             response_data = response.read()
             #response_data = str(re.sub('/hlsr/', 'http://uslb01.warriorsiptv.com:8880/hlsr/', response_data))
             self.wfile.write(response_data)
