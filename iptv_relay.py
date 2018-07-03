@@ -73,11 +73,19 @@ class myStreamer(BaseHTTPRequestHandler):
                 print str(e)
                 retry += 1
 
+        chunksize = 24*1024
         if retry == 0:
-            print "reading...\n"
-            response_data = response.read()
+            while True:
+                print "reading...\n"
+                chunk = response.read(chunksize)
+                if len(chunk) == 0:
+                    break
+                self.wfile.write(chunk)
+
+
+            #response_data = response.read()
             #response_data = str(re.sub('/hlsr/', 'http://uslb01.warriorsiptv.com:8880/hlsr/', response_data))
-            self.wfile.write(response_data)
+            #self.wfile.write(response_data)
 
             #response_data = response.read()
             response.close()
